@@ -70,10 +70,6 @@ public class AuthenticateController {
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		if(response.getResponse().isFailed()) {
-			return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-		} else {
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }
