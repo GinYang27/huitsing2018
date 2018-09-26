@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,7 +27,8 @@ public class User {
     private String token;
     private Timestamp tokenExpirationDate;
     
-    @OneToOne(mappedBy = "user")
+    @OneToOne
+   	@JoinColumn(name = "user_detail_id")
 	private UserDetail userDetail;
     
 	public Integer getId() {
