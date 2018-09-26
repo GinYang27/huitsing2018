@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.huitsing.server.model.auth.AuthResponseModel;
 import com.huitsing.server.model.auth.LoginReqeustModel;
+import com.huitsing.server.model.auth.SignUpRequestModel;
 import com.huitsing.server.model.response.OperationResponse;
 import com.huitsing.server.service.AuthenticationService;
 import com.huitsing.server.validator.LoginModelValidator;
@@ -52,16 +53,16 @@ public class AuthenticateController {
 	}
 	
 	@RequestMapping(value = "signup", method = RequestMethod.POST)
-	public ResponseEntity<AuthResponseModel> signUp(@RequestBody LoginReqeustModel loginModel, BindingResult result) {
+	public ResponseEntity<AuthResponseModel> signUp(@RequestBody SignUpRequestModel model, BindingResult result) {
 		AuthResponseModel response = null;
-		loginModelValidator.validate(loginModel, result);
-		if(result.hasErrors()) {
-			response = new AuthResponseModel();
-			response.setResponse(OperationResponse.generateFailedResponse(result.getAllErrors().toString()));
-			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-		}
+//		loginModelValidator.validate(loginModel, result);
+//		if(result.hasErrors()) {
+//			response = new AuthResponseModel();
+//			response.setResponse(OperationResponse.generateFailedResponse(result.getAllErrors().toString()));
+//			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//		}
 		try {
-			response = authenticationService.authenticate(loginModel);
+			response = authenticationService.register(model);
 		} catch (Exception e) {
 			e.printStackTrace();
 			response = new AuthResponseModel();
