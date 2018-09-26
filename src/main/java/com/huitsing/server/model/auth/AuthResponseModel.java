@@ -2,7 +2,7 @@ package com.huitsing.server.model.auth;
 
 import com.huitsing.server.model.response.OperationResponse;
 
-public class AuthModel {
+public class AuthResponseModel {
 	private Integer userId;
 	private String token;
 	private OperationResponse response;

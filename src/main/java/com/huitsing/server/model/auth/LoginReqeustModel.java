@@ -1,6 +1,6 @@
 package com.huitsing.server.model.auth;
 
-public class LoginModel {
+public class LoginReqeustModel {
 	private String email;
 	private String password;
 	

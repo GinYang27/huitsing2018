@@ -1,8 +1,8 @@
 package com.huitsing.server.service;
 
-import com.huitsing.server.model.auth.AuthModel;
-import com.huitsing.server.model.auth.LoginModel;
+import com.huitsing.server.model.auth.AuthResponseModel;
+import com.huitsing.server.model.auth.LoginReqeustModel;
 
 public interface AuthenticationService {
-	public AuthModel authenticate(LoginModel model) throws Exception;
+	public AuthResponseModel authenticate(LoginReqeustModel model) throws Exception;
 }

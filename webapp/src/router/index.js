@@ -8,6 +8,7 @@ import LoginView from '../views/LoginPage.vue'
 import Overview from '../views/Overview.vue'
 import ModulesView from '../views/ModulesView.vue'
 import AboutView from '../views/AboutView.vue'
+import SignUpView from '../views/SignUpPage.vue'
 
 export default [
   { path: '/', 
@@ -26,6 +27,7 @@ export default [
     ]
   },
   { path: '/page2', component: Page2View },
-  { path: '/vue', component: VueView},
-  { path: '/login', component: LoginView}
+  { path: '/vue', component: VueView },
+  { path: '/login', component: LoginView },
+  { path: '/signup', component: SignUpView }
 ]

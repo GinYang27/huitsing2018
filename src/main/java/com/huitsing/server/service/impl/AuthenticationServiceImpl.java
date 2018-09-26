@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.huitsing.server.constant.WebsiteConstant;
 import com.huitsing.server.dao.UserDAO;
 import com.huitsing.server.entity.User;
-import com.huitsing.server.model.auth.AuthModel;
-import com.huitsing.server.model.auth.LoginModel;
+import com.huitsing.server.model.auth.AuthResponseModel;
+import com.huitsing.server.model.auth.LoginReqeustModel;
 import com.huitsing.server.model.response.OperationResponse;
 import com.huitsing.server.service.AuthenticationService;
 import com.huitsing.server.util.TimestampHelper;
@@ -24,8 +24,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	private UserDAO userDAO;
 	
 	@Override
-	public AuthModel authenticate(LoginModel loginModel) throws Exception{
-		AuthModel authModel = new AuthModel();
+	public AuthResponseModel authenticate(LoginReqeustModel loginModel) throws Exception{
+		AuthResponseModel authModel = new AuthResponseModel();
 		User user = userDAO.findByEmail(loginModel.getEmail().toLowerCase().trim());
 		if(user == null) {
 			authModel.setResponse(OperationResponse.generateFailedResponse("Email is incorret."));

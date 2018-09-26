@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.huitsing.server.model.auth.AuthModel;
-import com.huitsing.server.model.auth.LoginModel;
+import com.huitsing.server.model.auth.AuthResponseModel;
+import com.huitsing.server.model.auth.LoginReqeustModel;
 import com.huitsing.server.model.response.OperationResponse;
 import com.huitsing.server.service.AuthenticationService;
 import com.huitsing.server.validator.LoginModelValidator;
@@ -27,11 +27,11 @@ public class AuthenticateController {
 	private LoginModelValidator loginModelValidator;
 	
 	@RequestMapping(value = "login", method = RequestMethod.PUT)
-	public ResponseEntity<AuthModel> login(@RequestBody LoginModel loginModel, BindingResult result) {
-		AuthModel response = null;
+	public ResponseEntity<AuthResponseModel> login(@RequestBody LoginReqeustModel loginModel, BindingResult result) {
+		AuthResponseModel response = null;
 		loginModelValidator.validate(loginModel, result);
 		if(result.hasErrors()) {
-			response = new AuthModel();
+			response = new AuthResponseModel();
 			response.setResponse(OperationResponse.generateFailedResponse(result.getAllErrors().toString()));
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 		}
@@ -39,7 +39,32 @@ public class AuthenticateController {
 			response = authenticationService.authenticate(loginModel);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new AuthModel();
+			response = new AuthResponseModel();
+			response.setResponse(OperationResponse.generateFailedResponse(e.getMessage()));
+			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if(response.getResponse().isFailed()) {
+			return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+		} else {
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "signup", method = RequestMethod.POST)
+	public ResponseEntity<AuthResponseModel> signUp(@RequestBody LoginReqeustModel loginModel, BindingResult result) {
+		AuthResponseModel response = null;
+		loginModelValidator.validate(loginModel, result);
+		if(result.hasErrors()) {
+			response = new AuthResponseModel();
+			response.setResponse(OperationResponse.generateFailedResponse(result.getAllErrors().toString()));
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+		try {
+			response = authenticationService.authenticate(loginModel);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new AuthResponseModel();
 			response.setResponse(OperationResponse.generateFailedResponse(e.getMessage()));
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
