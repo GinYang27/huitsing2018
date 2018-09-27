@@ -55,12 +55,6 @@ public class AuthenticateController {
 	@RequestMapping(value = "signup", method = RequestMethod.POST)
 	public ResponseEntity<AuthResponseModel> signUp(@RequestBody SignUpRequestModel model, BindingResult result) {
 		AuthResponseModel response = null;
-//		loginModelValidator.validate(loginModel, result);
-//		if(result.hasErrors()) {
-//			response = new AuthResponseModel();
-//			response.setResponse(OperationResponse.generateFailedResponse(result.getAllErrors().toString()));
-//			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//		}
 		try {
 			response = authenticationService.register(model);
 		} catch (Exception e) {
