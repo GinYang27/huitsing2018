@@ -23,10 +23,30 @@
 </template>
 
 <script>
+  import API from '../constants/apiUrl.js';
   export default {
+    data() {
+      return {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+      }
+    },
     methods: {
       signUp() {
-        console.log('777');
+        const apiUrl = API.SERVER_BASE_URL + API.post_signup;
+        const paramData = {
+          email: this.email,
+          password: this.password,
+          firstName: this.firstName,
+          lastName: this.lastName
+        };
+        this.$http.post(apiUrl, paramData).then(response => {
+          console.log(response);
+        }, errResponse => {
+          console.error(errResponse);
+        })
       }
     }
   }
